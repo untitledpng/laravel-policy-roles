@@ -1,5 +1,6 @@
 {
   "name": "untitledpng/laravel-policy-roles",
+  "description": "Add multiple roles to a user and handle their policies",
   "authors": [
     {
       "name": "untitledpng"
@@ -11,7 +12,7 @@
   },
   "autoload": {
     "psr-4": {
-      "UntitledPNG\\LaravelPolicyRoles\\": "src/"
+      "Untitledpng\\LaravelPolicyRoles\\": "src/"
     }
   },
   "extra": {
