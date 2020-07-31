@@ -1,0 +1,24 @@
+{
+  "name": "untitledpng/laravel-policy-roles",
+  "authors": [
+    {
+      "name": "untitledpng"
+    }
+  ],
+  "require": {
+    "php": "7.3.*|7.4.*",
+    "laravel/framework": "^6.0|^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "UntitledPNG\\LaravelPolicyRoles\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Untitledpng\\LaravelPolicyRoles\\ServiceProvider"
+      ]
+    }
+  }
+}
