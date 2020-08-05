@@ -1,59 +1,29 @@
 # laravel-policy-roles
-Add multiple roles to a user and handle their policies
+With this package you can have role based permissions. When the role does not exist, this package will automatically prevent access.
+This package also supports Laravel Nova out of the box.
 
-## Installation
-Extend your user model with `Untitledpng\LaravelPolicyRoles\Domain\User`
+## How to use this package
+*  First you have to extend your user eloquent model with `Untitledpng\LaravelPolicyRoles\Domain\User`.
+*  Create a new policy like the example policy below.
+*  Now add the policy to the `AuthServiceProvider` like you normally would.
+*  Add Roles and Permissions to your database.
+*  Done!
 
 ## Example policy
 ```php
-use Untitledpng\LaravelPolicyRoles\Domain\Permission;
+use Untitledpng\LaravelPolicyRoles\Services\PolicyService;
 
-class ItemPolicy
+class UserPolicy extends Untitledpng\LaravelPolicyRoles\Policies\BasePolicy
 {
-    use HandlesAuthorization;
     /**
-     * Determine whether the user can view the item.
+     * UserPolicy constructor.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param PolicyService $policyService
      */
-    public function view(User $user)
-    {
-        $permission = Permission::where('name', 'items-view')->first();
-        return $user->hasRole($permission->roles);
-    }
-    /**
-     * Determine whether the user can create items.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
-    {
-        $permission = Permission::where('name', 'items-create')->first();
-        return $user->hasRole($permission->roles);
-    }
-    /**
-     * Determine whether the user can update the item.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function update(User $user)
-    {
-        $permission = Permission::where('name', 'items-update')->first();
-        return $user->hasRole($permission->roles);
-    }
-    /**
-     * Determine whether the user can delete the item.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function delete(User $user)
-    {
-        $permission = Permission::where('name', 'items-delete')->first();
-        return $user->hasRole($permission->roles);
+    public function __construct(
+        \Untitledpng\LaravelPolicyRoles\Services\PolicyService $policyService
+    ) {
+        parent::__construct('user', $policyService);
     }
 }
 ```
