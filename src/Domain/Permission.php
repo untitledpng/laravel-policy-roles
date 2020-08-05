@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $name
  * @property string $label
  * @property string $description
+ * @property Role[] $roles
+ * @property bool $inRole
  *
  * @package Untitledpng\LaravelPolicyRoles\Domain
  */
