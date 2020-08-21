@@ -2,6 +2,9 @@
 With this package you can have role based permissions. When the role does not exist, this package will automatically prevent access.
 This package also supports Laravel Nova out of the box.
 
+## Installation
+Install the package using composer `composer require untitledpng/laravel-policy-roles`.
+
 ## How to use this package
 *  First you have to extend your user eloquent model with `Untitledpng\LaravelPolicyRoles\Domain\User`.
 *  Create a new policy like the example policy below.
@@ -27,3 +30,7 @@ class UserPolicy extends Untitledpng\LaravelPolicyRoles\Policies\BasePolicy
     }
 }
 ```
+
+## Extra features
+*  It is possible to use `$user->hasRole('view-user');` This will return true/ false based on if the user has that role.
+*  Usage of a special helper `@can('create', App\User::class) YES @endcan` to check if the user has a specific permission.
