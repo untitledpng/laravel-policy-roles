@@ -1,6 +1,6 @@
 <?php
 
-namespace Untitledpng\LaravelPolicyRoles\Domain;
+namespace Untitledpng\LaravelPolicyRoles\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,16 +20,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Permission extends Model
 {
     /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
+     * @inheritDoc
      */
     protected $guarded = ['id'];
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * @inheritDoc
      */
     protected $fillable = array('name', 'label', 'description');
 
@@ -54,6 +50,7 @@ class Permission extends Model
         if (is_string($role)) {
             return $this->roles->contains('name', $role);
         }
+
         return (bool) $role->intersect($this->roles)->count();
     }
 }

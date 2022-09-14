@@ -2,30 +2,41 @@
 
 namespace Untitledpng\LaravelPolicyRoles\Services;
 
-use App\User;
-use Illuminate\Support\Facades\DB;
-use Untitledpng\LaravelPolicyRoles\Domain\Permission;
-use Untitledpng\LaravelPolicyRoles\Domain\Role;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Untitledpng\LaravelPolicyRoles\Contracts\Repositories\PermissionRepositoryContract;
+use Untitledpng\LaravelPolicyRoles\Contracts\Services\PolicyServiceInterface;
 
-class PolicyService
+class PolicyService implements PolicyServiceInterface
 {
     /**
-     * Check if the user has the permission/ role.
-     *
-     * @param  User $user
-     * @param  string $permission
-     * @return bool
+     * @var PermissionRepositoryContract
      */
-    public function hasPermission(User $user, string $permission): bool
+    private $permissionRepository;
+
+    /**
+     * @param  PermissionRepositoryContract $permissionRepository
+     */
+    public function __construct(PermissionRepositoryContract $permissionRepository)
     {
-        /** @var Permission $permission */
-        if (null === ($permission = Permission::where('name', $permission)->first())) {
+        $this->permissionRepository = $permissionRepository;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function hasPermission(Authenticatable $user, string $permission): bool
+    {
+        $model = $this->permissionRepository->getPermissionByName($permission);
+
+        if (null === $model) {
             /**
              * Permission does not exist, prevent access.
              */
             return false;
         }
 
-        return $user->hasRole($permission->roles);
+        return $user->hasRole(
+            $model->roles
+        );
     }
 }

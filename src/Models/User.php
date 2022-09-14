@@ -1,8 +1,7 @@
 <?php
 
-namespace Untitledpng\LaravelPolicyRoles\Domain;
+namespace Untitledpng\LaravelPolicyRoles\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +12,6 @@ use Illuminate\Notifications\Notifiable;
  *
  * @property Role[] $roles
  * @property $assignRole
- *
  *
  * @package Untitledpng\LaravelPolicyRoles\Domain
  */
@@ -53,6 +51,7 @@ class User extends Authenticatable
         if (is_string($role)) {
             return $this->roles->contains('name', $role);
         }
+
         return (bool) $role->intersect($this->roles)->count();
     }
 }

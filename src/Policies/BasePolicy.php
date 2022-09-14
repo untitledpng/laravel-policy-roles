@@ -2,18 +2,20 @@
 
 namespace Untitledpng\LaravelPolicyRoles\Policies;
 
-use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Untitledpng\LaravelPolicyRoles\Services\PolicyService;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Untitledpng\LaravelPolicyRoles\Contracts\Policies\BasePolicyContract;
+use Untitledpng\LaravelPolicyRoles\Contracts\Services\PolicyServiceInterface;
 
-class BasePolicy
+class BasePolicy implements BasePolicyContract
 {
     use HandlesAuthorization;
 
     /**
-     * @var PolicyService
+     * @var PolicyServiceInterface
      */
     private $policyService;
+
     /**
      * @var string
      */
@@ -23,11 +25,11 @@ class BasePolicy
      * BasePolicy constructor.
      *
      * @param string $modelName
-     * @param PolicyService $policyService
+     * @param PolicyServiceInterface $policyService
      */
     public function __construct(
         string $modelName,
-        PolicyService $policyService
+        PolicyServiceInterface $policyService
     )
     {
         $this->modelName = $modelName;
@@ -35,57 +37,49 @@ class BasePolicy
     }
 
     /**
-     * @param  User $user
-     * @return bool
+     * @inheritDoc
      */
-    public function view(User $user): bool
+    public function view(Authenticatable $user): bool
     {
         return $this->policyService->hasPermission($user, "{$this->modelName}-view");
     }
 
     /**
-     * @param  User $user
-     * @return bool
+     * @inheritDoc
      */
-    public function create(User $user): bool
+    public function create(Authenticatable $user): bool
     {
         return $this->policyService->hasPermission($user, "{$this->modelName}-create");
     }
 
     /**
-     * @param  User $user
-     * @return bool
+     * @inheritDoc
      */
-    public function update(User $user): bool
+    public function update(Authenticatable $user): bool
     {
         return $this->policyService->hasPermission($user, "{$this->modelName}-update");
     }
 
     /**
-     * @param  User $user
-     * @return bool
+     * @inheritDoc
      */
-    public function delete(User $user): bool
+    public function delete(Authenticatable $user): bool
     {
         return $this->policyService->hasPermission($user, "{$this->modelName}-delete");
     }
 
     /**
-     * @param  User $user
-     * @return bool
+     * @inheritDoc
      */
-    public function restore(User $user): bool
+    public function restore(Authenticatable $user): bool
     {
         return $this->policyService->hasPermission($user, "{$this->modelName}-restore");
     }
 
     /**
-     * Determine whether the user can view any posts.
-     *
-     * @param  User  $user
-     * @return bool
+     * @inheritDoc
      */
-    public function viewAny(User $user): bool
+    public function viewAny(Authenticatable $user): bool
     {
         return $this->view($user);
     }
