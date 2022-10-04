@@ -14,12 +14,12 @@ class BasePolicy implements BasePolicyContract
     /**
      * @var PolicyServiceInterface
      */
-    private $policyService;
+    protected $policyService;
 
     /**
      * @var string
      */
-    private $modelName;
+    protected $modelName;
 
     /**
      * BasePolicy constructor.
