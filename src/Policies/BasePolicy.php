@@ -83,4 +83,36 @@ class BasePolicy implements BasePolicyContract
     {
         return $this->view($user);
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function canSee(Authenticatable $user): bool
+    {
+        return $this->policyService->hasPermission($user, "{$this->modelName}-can-see");
+    }
+        
+    /**
+     * @inheritDoc
+     */
+    public function canRun(Authenticatable $user): bool
+    {
+        return $this->policyService->hasPermission($user, "{$this->modelName}-can-run");
+    }
+        
+    /**
+     * @inheritDoc
+     */
+    public function runAction(Authenticatable $user): bool
+    {
+        return $this->policyService->hasPermission($user, "{$this->modelName}-run-action");
+    }
+        
+    /**
+     * @inheritDoc
+     */
+    public function runDestructiveAction(Authenticatable $user): bool
+    {
+        return $this->policyService->hasPermission($user, "{$this->modelName}-run-destructive-action");
+    }
 }
